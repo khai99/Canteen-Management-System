@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1a5e21cc-e96e-4821-af6f-e06d92cd2634">
+	<property name="ireport.zoom" value="2.143588810000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="datePara" class="java.lang.String"/>
+	<parameter name="parameter1" class="java.lang.String"/>
+	<parameter name="parameter2" class="java.lang.String"/>
+	<parameter name="parameter3" class="java.lang.String"/>
+	<parameter name="parameter4" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[Select f.foodid, f.foodname, f.foodprice,SUM(o.quantity) as quantity
+FROM food f
+INNER JOIN(
+SELECT orderid,foodid, quantity
+FROM orderdetail
+
+) o
+ON o.foodid = f.foodid
+INNER JOIN(
+SELECT orderid,orderdate
+FROM orders
+
+) r
+ON r.orderid= o.orderid
+
+WHERE r.orderdate BETWEEN $P{parameter1} AND $P{parameter2}
+Group by f.FOODID,f.foodname, f.foodprice
+ORDER BY quantity DESC
+FETCH FIRST 5 ROWS ONLY]]>
+	</queryString>
+	<field name="FOODID" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FOODNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FOODPRICE" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="QUANTITY" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="140" splitType="Stretch">
+			<staticText>
+				<reportElement x="18" y="79" width="183" height="20" uuid="6d9c102c-e6a1-44f7-ab8c-697598401823"/>
+				<text><![CDATA[Title: Top 5 Food Order Summary Report ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="328" y="79" width="149" height="20" uuid="ae5791b9-8850-437f-93de-2105f9963268"/>
+				<text><![CDATA[Generated Date: ]]></text>
+			</staticText>
+			<image>
+				<reportElement x="214" y="-2" width="172" height="61" uuid="e125a494-2fbb-4d75-8dde-89d3196fe4f2"/>
+				<imageExpression><![CDATA["C:\\Users\\vinso\\Desktop\\PSDC combine\\reportLogo1.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="328" y="109" width="149" height="20" uuid="9e01218e-d347-43f0-9fc8-d45b810e5e80"/>
+				<text><![CDATA[Printed by:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="109" width="27" height="20" uuid="e35fb198-ad56-4cd0-9533-69e96897fb56"/>
+				<text><![CDATA[Date: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="45" y="109" width="71" height="20" uuid="1e64e8b9-1eb5-4287-9da8-36304aa0b91e"/>
+				<textFieldExpression><![CDATA[$P{parameter1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="139" y="109" width="75" height="20" uuid="bb8f3036-2fdf-45b4-a518-0fa1d101cb67"/>
+				<textFieldExpression><![CDATA[$P{parameter2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="377" y="109" width="100" height="20" uuid="51cc20eb-539f-4ddf-88d1-bb833632d4b4"/>
+				<textFieldExpression><![CDATA[$P{parameter3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="404" y="79" width="100" height="20" uuid="025ee17f-316b-4f6f-8f1b-c6e94a50df47"/>
+				<textFieldExpression><![CDATA[$P{parameter4}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="116" y="109" width="23" height="20" uuid="60c1436b-8414-42bf-95ba-215fcabce947"/>
+				<text><![CDATA[to]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20" uuid="b489e48d-584d-46d7-b2f3-5f76b9b6cfd3"/>
+				<text><![CDATA[************************************************************************************************************************************************]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="24" y="0" width="92" height="20" uuid="151e151c-3372-44d0-ba2c-5963444b9e48"/>
+				<text><![CDATA[FOODID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="0" width="76" height="20" uuid="924c7a07-4a61-45f6-9cb5-f6c34ccc2138"/>
+				<text><![CDATA[FOODNAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="291" y="0" width="86" height="20" uuid="40ce4f6f-099c-45a0-a11e-187adec63488"/>
+				<text><![CDATA[FOODPRICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="427" y="0" width="90" height="20" uuid="a4bda9a1-4352-4469-90d2-a0c2f97cf184"/>
+				<text><![CDATA[QUANTITY]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="24" y="0" width="92" height="20" uuid="a57a96eb-007f-4a9b-887c-8608e31e4bbc"/>
+				<textFieldExpression><![CDATA[$F{FOODID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="87" height="20" uuid="87f0fe63-ecbf-4796-a586-800246a1d578"/>
+				<textFieldExpression><![CDATA[$F{FOODNAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="299" y="0" width="87" height="20" uuid="14b85d17-a85c-4ad6-8869-c954c409b2ae"/>
+				<textFieldExpression><![CDATA[$F{FOODPRICE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="441" y="0" width="103" height="20" uuid="4e0b0fff-248e-4bcd-9292-652c37ee772b"/>
+				<textFieldExpression><![CDATA[$F{QUANTITY}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="30" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="10" width="555" height="20" uuid="2e07aa1b-7a71-40c1-a1ce-1e7872685ce9"/>
+				<text><![CDATA[************************************************************************************************************************************************]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="237" y="30" width="149" height="20" uuid="ca5149e5-f461-426b-9fdb-268c19bc07cb"/>
+				<text><![CDATA[END OF REPORT]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
